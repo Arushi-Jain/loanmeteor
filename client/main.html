@@ -1,0 +1,107 @@
+<head>
+  <title>Loan Manager</title>
+  <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
+  <link href="./main.css" rel="Stylesheet" />
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <nav class="green">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Loan Manager</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="nav-item">
+            {{> loginButtons}}
+          </li>
+          <li class="nav-item">
+            <button class="waves-effect waves-light btn modal-trigger" id="addmodal">Apply New Loan</button>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </nav>
+    {{#if currentUser}}
+      {{#if selectedRoles}}
+          {{#if applyNew}}
+            {{> applyloan}}
+          {{else}}
+            {{> loantable selectedRoles=selectedRoles}}
+          {{/if}}
+      {{else}} 
+        {{> roles}}
+      {{/if}}  
+    {{else}}
+       <p>Please Login to view Loans </p>  
+    {{/if}}  
+</body>
+
+<template name="loantable">
+  <div class="container">
+    <ul class="collection" style="margin-top: 20px;">
+      <table>
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Loan Amount</th>
+              <th>Borrowed By</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          {{#each loan}}
+            <tr>
+              <td>{{name}}</td>
+              <td>{{amount}}</td>
+              <td>{{user}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </ul>
+  </div>
+</template>
+
+<template name="applyloan">
+  <div class="container">
+        <h3>Apply for Loan</h3>
+        <form class="add-form">
+          <input type="text" name="Name" placeholder="Loan Name" />
+          <input type="number" name="Amount" placeholder="Loan Amount" />
+        <button type="submit" class="btn btn-primary" id="submitloan">Submit</button>
+      </form>
+
+</div>
+</template>
+
+<template name="roles">
+  <div class="container">
+    <h3>Select Role</h3>
+  <form action="#" class="role-form">
+    <p>
+      <label>
+        <input class="with-gap"  name="group1" type="radio" value="admin" />
+        <span>Admin</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input class="with-gap" name="group1" type="radio" value="borrower"/>
+        <span>Borrower</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input class="with-gap" name="group1" type="radio" value="lender"/>
+        <span>Lender</span>
+      </label>
+    </p>
+    <!-- <button class="modal-close waves-effect waves-green btn-flat submitBtn"> Submit </button> -->
+  </form>
+  </div>
+</template>
+
